@@ -1,9 +1,10 @@
+import os
 from openai import OpenAI
-
-client = OpenAI(api_key="YOUR_OPENAI_API_KEY")
 
 def analyze_product(product_name):
     try:
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -14,9 +15,9 @@ def analyze_product(product_name):
 
                     {product_name}
 
-                    Return:
+                    Give:
                     - Why it's trending
-                    - Opportunity level
+                    - Opportunity level (Low/Medium/High)
                     - Improvement idea
                     """
                 }
@@ -25,5 +26,5 @@ def analyze_product(product_name):
 
         return response.choices[0].message.content
 
-    except:
-        return "AI analysis unavailable (API key missing or error)"
+    except Exception as e:
+        return f"AI error: {str(e)}"
