@@ -1,3 +1,8 @@
+try:
+    from ai_analyzer import analyze_product
+except:
+    def analyze_product(x):
+        return "AI temporarily unavailable"
 import streamlit as st
 from data_engine import generate_products
 from scorer import calculate_score
